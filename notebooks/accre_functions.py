@@ -4,7 +4,6 @@ import matplotlib.pyplot as plt
 import time
 import numpy as np
 import statsmodels.formula.api as smf
-
 class ACCREDataProcessor:
     def __init__(self):
         self.jobs = None
