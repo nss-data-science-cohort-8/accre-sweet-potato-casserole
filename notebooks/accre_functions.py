@@ -183,13 +183,13 @@ class ACCREDataProcessor:
         plt.tight_layout()
         plt.show()
 
-    def test_range_rolling_completed_jobs(self, range_begin=1, range_end=5, step_size=1):
+    def test_range_rolling_completed_jobs(self, range_begin=1, range_end=5, step_size=1, closed='left'):
         self.setup_accre_data()
         window_sizes = [str(x)+'min' for x in range(range_begin, range_end, step_size)]
         self.rolling_range_results = {}
         for window in window_sizes:
             rolling_col_name = f'rolling_completed_jobs_{window}'
-            self.data[rolling_col_name] = self.data['total_completed_jobs'].rolling(window).mean()
+            self.data[rolling_col_name] = self.data['total_completed_jobs'].rolling(window, closed=closed).mean()
             formula = f'slurm_success ~ total_completed_jobs + {rolling_col_name}'
             model = smf.logit(formula, data=self.data).fit()
             self.rolling_range_results[window] = model
